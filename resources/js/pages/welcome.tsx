@@ -46,7 +46,12 @@ export default function Welcome() {
                                     START BUILDING NOW
                                 </button>
                                 <div className="flex items-center gap-3 py-4">
-                                    <div className="w-2 h-2 bg-primary shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+                                    {/* <div className="w-2 h-2 bg-emerald-400 shadow-[0_0_10px_rgba(255,255,255,0.8)] rounded-full" /> */}
+                                    <span class="relative flex h-3 w-3">
+                                        <span class="animate-[ping_2s_linear_infinite] absolute inline-flex h-8 w-8 -top-2.5 -left-2.5 rounded-full bg-gradient-to-tr from-emerald-400/80 to-transparent"></span>
+
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                                    </span>
                                     <span className="font-label text-xs uppercase tracking-[0.2em] text-white/60">
                                         Currently accepting 2 new projects
                                     </span>
