@@ -1,0 +1,55 @@
+service: mvpvibesapp
+image: ghcr.io/globalfunc/mvpvibesapp
+
+ssh:
+  user: root
+
+servers:
+  web:
+    hosts:
+      - 46.101.168.59
+    options:
+      add-host: "host.docker.internal:host-gateway"
+
+proxy:
+  ssl: true
+  host: mvpvibes.eu
+  app_port: 80
+
+registry:
+  server: ghcr.io
+  username: globalfunc
+  password:
+    - KAMAL_REGISTRY_PASSWORD   # GitHub PAT with packages:read + packages:write scopes
+
+builder:
+  arch: amd64
+  args:
+    VITE_APP_NAME: MvpVibes
+
+env:
+  clear:
+    APP_ENV: production
+    APP_DEBUG: "false"
+    APP_URL: https://mvpvibes.eu
+    ASSET_URL: https://mvpvibes.eu
+    DB_CONNECTION: pgsql
+    DB_HOST: host.docker.internal
+    DB_PORT: "5432"
+    DB_DATABASE: mvpvibeapp
+    DB_USERNAME: mvpvibeapp
+    QUEUE_CONNECTION: database
+    CACHE_STORE: database
+    SESSION_DRIVER: database
+    FILESYSTEM_DISK: local
+    BROADCAST_CONNECTION: log
+    MAIL_MAILER: smtp
+    MAIL_FROM_ADDRESS: "hello@mvpvibes.eu"
+    MAIL_FROM_NAME: MvpVibes
+  secret:
+    - APP_KEY
+    - DB_PASSWORD
+    - MAIL_HOST
+    - MAIL_PORT
+    - MAIL_USERNAME
+    - MAIL_PASSWORD
