@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { Head } from '@inertiajs/react';
 import LandingFooter from '@/components/landing-footer';
 import NavMenu from '@/components/nav-menu';
+import BookingModal from '@/components/booking-modal';
 
 export default function Welcome() {
+    const [bookingOpen, setBookingOpen] = useState(false);
+
     return (
         <>
             <Head title="Mvp Vibes | From Idea to MVP Faster">
@@ -363,7 +367,10 @@ export default function Welcome() {
                         <h2 className="font-headline font-bold text-5xl md:text-7xl text-white mb-10 tracking-tighter">
                             Ready to shift gears?
                         </h2>
-                        <button className="bg-white text-black font-headline font-bold text-xl px-12 py-6 hover:scale-105 transition-transform">
+                        <button
+                            onClick={() => setBookingOpen(true)}
+                            className="bg-white text-black font-headline font-bold text-xl px-12 py-6 hover:scale-105 transition-transform"
+                        >
                             BOOK A SCOPING SESSION
                         </button>
                     </section>
@@ -371,6 +378,8 @@ export default function Welcome() {
 
                 <LandingFooter />
             </div>
+
+            <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} />
         </>
     );
 }
