@@ -36,7 +36,7 @@ export default function Welcome() {
                                 loop
                                 muted
                                 playsInline
-                                src="/storage/assets/hero_small.webm"
+                                src="/assets/hero_small.webm"
                             />
                         </div>
                         <div className="relative z-20 max-w-5xl">
@@ -274,35 +274,35 @@ export default function Welcome() {
                                 {[
                                     {
                                         name: 'Laravel',
-                                        src: '/storage/assets/tech-stack-png-big/Brand=laravel, Style=Dark.png',
+                                        src: '/assets/tech-stack-png-big/Brand=laravel, Style=Dark.png',
                                     },
                                     {
                                         name: 'ReactJS',
-                                        src: '/storage/assets/tech-stack-png-big/Brand=reactjs, Style=Dark.png',
+                                        src: '/assets/tech-stack-png-big/Brand=reactjs, Style=Dark.png',
                                     },
                                     {
                                         name: 'NextJS',
-                                        src: '/storage/assets/tech-stack-png-big/Brand=nextjs, Style=Dark.png',
+                                        src: '/assets/tech-stack-png-big/Brand=nextjs, Style=Dark.png',
                                     },
                                     {
                                         name: 'Python',
-                                        src: '/storage/assets/tech-stack-png-big/Brand=python, Style=Dark.png',
+                                        src: '/assets/tech-stack-png-big/Brand=python, Style=Dark.png',
                                     },
                                     {
                                         name: 'Flutter',
-                                        src: '/storage/assets/tech-stack-png-big/Brand=flutter, Style=Dark.png',
+                                        src: '/assets/tech-stack-png-big/Brand=flutter, Style=Dark.png',
                                     },
                                     {
                                         name: 'Docker',
-                                        src: '/storage/assets/tech-stack-png-big/Brand=docker, Style=Dark.png',
+                                        src: '/assets/tech-stack-png-big/Brand=docker, Style=Dark.png',
                                     },
                                     {
                                         name: 'TypeScript',
-                                        src: '/storage/assets/tech-stack-png-big/Brand=typescript, Style=Dark.png',
+                                        src: '/assets/tech-stack-png-big/Brand=typescript, Style=Dark.png',
                                     },
                                     {
                                         name: 'Ubuntu',
-                                        src: '/storage/assets/tech-stack-png-big/Brand=ubuntu, Style=Dark.png',
+                                        src: '/assets/tech-stack-png-big/Brand=ubuntu, Style=Dark.png',
                                     },
                                 ].map(({ name, src }) => (
                                     <div
