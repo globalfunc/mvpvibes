@@ -26,10 +26,13 @@ export default function Welcome() {
                     <section className="relative h-230.25 flex items-center px-8 overflow-hidden">
                         <div className="absolute inset-0 z-0">
                             <div className="absolute inset-0 bg-linear-to-r from-background via-background/80 to-transparent z-10" />
-                            <img
-                                className="w-full h-full object-cover grayscale opacity-40"
-                                alt="Cinematic close-up of steaming hot coffee with artistic blur"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq5Eyw-kkQHVTsSr6oEhxLy1tXRi9hIpDFajRLQMdCr9AufqgXdFM68647LXWAA711muA0hFPviZHZuYrB0jEWDdBwKAu5DFp-M8PEC-m1nnemwGNiDXz5kRLGS_aZuGXrCA9bmKpmhEwGYW10jR76iA4O8RKBtIIrnPdOAIpnXj3Pbp3Cgsxgm3rnxplg-gn0-DXBK-0IMQ9i8x0kl1XEBoWWwFh9x1Wb_Pm8g1Jx8ypnAxnBhNxGj6oGl3MJlDQ0Khn2TcrbQxM0"
+                            <video
+                                className="w-full h-full object-cover opacity-40"
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                src="/storage/assets/hero_small.webm"
                             />
                         </div>
                         <div className="relative z-20 max-w-5xl">
