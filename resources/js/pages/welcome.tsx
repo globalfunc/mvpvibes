@@ -270,19 +270,35 @@ export default function Welcome() {
                                 {[
                                     {
                                         name: 'Laravel',
-                                        src: 'https://lh3.googleusercontent.com/aida/ADBb0ujwYI3Lk4p2MpUzE-VuGApGCi7InG-S7QudMfFn0BbKyoqxjp5GOchqPw7RvDZHgqsTs50pphwGk1Tzx9yBDhUAJzwuHwzpk1k3zStNtI1htzKt841VkRecu5COmKv7fDX8IGnC78_TiqOsZW0iNcghqLf4Ly5povCiYAFjVw_1hQDD0hHgK8ZpU881LiiTGgTFN5ihcyHr5QrzAdbm5WLgDe_ao6U-JJNOziHuNUmKlOTcwEukxRLxf6SjmHHT2Anf3f9ARCZnBX0',
+                                        src: '/storage/assets/tech-stack-png-big/Brand=laravel, Style=Dark.png',
                                     },
                                     {
                                         name: 'ReactJS',
-                                        src: 'https://lh3.googleusercontent.com/aida/ADBb0ugKCyQOoz6K3GO2XQsx05slhMBFc8N_Zp3oO9ar2bM3goOuOBMBtq0FZrgiiZHsxlUMByOKGw3-tJH5XpqYuOebEh6gysxeqtvj1OVd8cMbwLA5sdoN1lke57QG25zuU00-LUXLCdn8WecyzkIu7r1Ud4_T8Bl8IiPq17iTJd9_ICsT3Br1sDP1CAtXsYbYHRrNUa25jrASDvM9fxmVuwBtw9zZuu6dIfeNHUZEyw1_7KxVN3f09jaqBCbLWff6cBKt5tnyEBWMKyo',
+                                        src: '/storage/assets/tech-stack-png-big/Brand=reactjs, Style=Dark.png',
                                     },
                                     {
                                         name: 'NextJS',
-                                        src: 'https://lh3.googleusercontent.com/aida/ADBb0ugc6TYuQdPDTzIcfcljq48GD9XwFzMF6lXSWcRVma2WRsdaq495wqKelklkuPuguGnaXg3Rzvbnyx9FxTwvh563hBgArIJjiNi0UxjJbXQb0eJsOEU3mU9PtOFsCrBss6rehfqhJQre6gYS3Jx04gyXbM_dcc3Q7O0yjXJd35nFCd39bMH5Jgb69c8GHEefVhls-Jcci81N9yi4E4em4yKp78BYLitVFjAQq9b1E8KjO8y4E6mrFnzJorcrYZsw7aHOYCqO_Nm0-Kc',
+                                        src: '/storage/assets/tech-stack-png-big/Brand=nextjs, Style=Dark.png',
                                     },
                                     {
                                         name: 'Python',
-                                        src: 'https://lh3.googleusercontent.com/aida/ADBb0uiJ4m_qqsnf2Op67Avq3t8JUzJnNcCFlxy963xAMrj2-9u524RoUSVoTQ3pu9Pho7z3aETbOUd5qQW7kPJ9D5DIk1b1IyLZAd_TOndCGmaVzWs0fw-lC8gq37hH85KL7prTQ_Ivx6qmzi75KAUOsnGJi1E61SCVDUW87XepfsD31qeCMfo49fyBWzi1Ol67enQfjZbfEYMV-MK_7ivrYARIV3mzK7rE43tpRHUC84ehwKQ85MsNHXnUv6iR-ILNZ8mVths-N21P9b0',
+                                        src: '/storage/assets/tech-stack-png-big/Brand=python, Style=Dark.png',
+                                    },
+                                    {
+                                        name: 'Flutter',
+                                        src: '/storage/assets/tech-stack-png-big/Brand=flutter, Style=Dark.png',
+                                    },
+                                    {
+                                        name: 'Docker',
+                                        src: '/storage/assets/tech-stack-png-big/Brand=docker, Style=Dark.png',
+                                    },
+                                    {
+                                        name: 'TypeScript',
+                                        src: '/storage/assets/tech-stack-png-big/Brand=typescript, Style=Dark.png',
+                                    },
+                                    {
+                                        name: 'Ubuntu',
+                                        src: '/storage/assets/tech-stack-png-big/Brand=ubuntu, Style=Dark.png',
                                     },
                                 ].map(({ name, src }) => (
                                     <div
