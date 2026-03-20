@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mvp Vibes | From Idea to MVP Faster</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary": "#ffd16c",
+              "on-primary": "#532a00",
+              "secondary-fixed-dim": "#d6d4d3",
+              "outline": "#767575",
+              "secondary-fixed": "#e4e2e1",
+              "on-secondary-fixed-variant": "#5c5b5b",
+              "surface-dim": "#0e0e0e",
+              "on-primary-fixed": "#180800",
+              "background": "#0e0e0e",
+              "surface-container-high": "#20201f",
+              "surface-variant": "#262626",
+              "on-secondary-container": "#d2d0cf",
+              "secondary-dim": "#d6d4d3",
+              "on-surface": "#ffffff",
+              "on-primary-container": "#442100",
+              "on-tertiary-container": "#553e00",
+              "on-tertiary-fixed": "#3d2b00",
+              "surface": "#0e0e0e",
+              "outline-variant": "#484847",
+              "inverse-on-surface": "#565555",
+              "on-secondary-fixed": "#3f3f3f",
+              "error-dim": "#d53d18",
+              "secondary": "#e4e2e1",
+              "inverse-primary": "#914d00",
+              "error-container": "#b92902",
+              "tertiary-dim": "#ecb200",
+              "on-error-container": "#ffd2c8",
+              "secondary-container": "#474747",
+              "surface-container-lowest": "#000000",
+              "on-tertiary": "#604700",
+              "on-tertiary-fixed-variant": "#604700",
+              "on-error": "#450900",
+              "primary-fixed-dim": "#ea8000",
+              "primary": "#ff9f4a",
+              "inverse-surface": "#fcf9f8",
+              "surface-bright": "#2c2c2c",
+              "primary-dim": "#ed8200",
+              "on-surface-variant": "#adaaaa",
+              "tertiary-fixed-dim": "#ecb200",
+              "surface-tint": "#ff9f4a",
+              "primary-fixed": "#fd8b00",
+              "on-secondary": "#525151",
+              "surface-container-highest": "#262626",
+              "tertiary-container": "#fdc003",
+              "on-primary-fixed-variant": "#512800",
+              "surface-container-low": "#131313",
+              "primary-container": "#fd8b00",
+              "surface-container": "#1a1a1a",
+              "tertiary-fixed": "#fdc003",
+              "error": "#ff7351",
+              "on-background": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-glow-mesh {
+            background-color: #0e0e0e;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(255, 159, 74, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 50%, rgba(253, 139, 0, 0.1) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(255, 159, 74, 0.05) 0px, transparent 50%);
+        }
+        .glass-card {
+            background: rgba(38, 38, 38, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(72, 72, 71, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 159, 74, 0.4);
+            box-shadow: 0 0 30px rgba(255, 159, 74, 0.1);
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 px-6 py-4 bg-surface/60 backdrop-blur-xl dark:bg-[#0e0e0e]/60 shadow-[0_0_40px_rgba(255,159,74,0.05)]">
+<div class="flex justify-between items-center max-w-7xl mx-auto w-full">
+<div class="text-2xl font-bold tracking-tighter text-[#ff9f4a] font-headline">Mvp Vibes</div>
+<div class="hidden md:flex items-center space-gap-8 gap-8">
+<a class="text-sm font-medium tracking-wide text-[#ff9f4a] border-b-2 border-[#ff9f4a] pb-1" href="#services">Services</a>
+<a class="text-sm font-medium tracking-wide text-on-surface-variant/80 hover:text-white transition-colors" href="#tech">Tech Stack</a>
+<a class="text-sm font-medium tracking-wide text-on-surface-variant/80 hover:text-white transition-colors" href="#why">Why Us</a>
+</div>
+<button class="bg-primary text-on-primary font-label px-6 py-2.5 rounded-lg font-bold hover:bg-primary-fixed transition-all active:scale-95 shadow-[0_0_15px_rgba(255,159,74,0.3)]">
+                Get Started
+            </button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+<!-- Background Video/Visual Container -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-surface/20 via-surface/60 to-surface z-10"></div>
+<img alt="Coffee steaming in a dark room" class="w-full h-full object-cover opacity-40 mix-blend-screen grayscale contrast-125" data-alt="Blurred steaming coffee with amber cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdtQ_rkDkqAnvwwRVDbSBe3IQT0bgB-j_OJyWd-MjwHkHjGSUAynk-PNnZOz8Dw50PP9ldV10ROtyoK-r3af3CwuxUumiqJNoJqzMl5_UvldWzQW3nqqZR__WigQYWuSkIk1fqd1jB_xbf-VGVRrCj4D3r-xsvyo-Uccpi9RLxAcowPPWZeLvr7xyLixCRn_qmJ3bQVd5ZOUXonWnyNXn2OHLllkGLpvc3Oi6SEO7mDxFBknbbHTIfhXKBWVgoN3Y7MJjLhlmQ8BlM"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+</div>
+<div class="relative z-20 max-w-5xl mx-auto px-6 text-center">
+<span class="inline-block py-1 px-4 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-bold uppercase tracking-widest mb-8 font-label">
+                Innovation at Speed
+            </span>
+<h1 class="font-headline text-5xl md:text-8xl font-bold tracking-tighter text-on-surface mb-8 leading-[1.1]">
+                From idea to MVP <span class="text-primary drop-shadow-[0_0_20px_rgba(255,159,74,0.5)]">faster</span> than your coffee gets cold
+            </h1>
+<p class="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-12 font-light">
+                We build high-performance digital products for founders who need to move at the speed of thought. AI-accelerated development meets premium aesthetics.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+<button class="w-full sm:w-auto px-10 py-4 bg-primary text-on-primary font-bold rounded-xl text-lg hover:bg-primary-fixed transition-all shadow-[0_0_30px_rgba(255,159,74,0.4)] hover:shadow-[0_0_50px_rgba(255,159,74,0.6)]">
+                    Start Building Now
+                </button>
+<button class="w-full sm:w-auto px-10 py-4 bg-surface-container-high/50 backdrop-blur-md text-on-surface font-bold rounded-xl text-lg border border-outline-variant/20 hover:bg-surface-container-highest transition-all">
+                    View Case Studies
+                </button>
+</div>
+</div>
+</section>
+<div class="bg-glow-mesh transition-all duration-1000">
+<!-- Services Section -->
+<section class="py-24 px-6 max-w-7xl mx-auto" id="services">
+<div class="mb-20">
+<h2 class="font-headline text-4xl md:text-5xl font-bold mb-4">Our Services</h2>
+<div class="h-1 w-20 bg-primary rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Service 1 -->
+<div class="glass-card p-8 rounded-2xl group">
+<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+</div>
+<h3 class="text-xl font-bold mb-4 font-headline">AI-Accelerated Prototyping</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Transforming napkin sketches into interactive functional prototypes in days, not months.</p>
+<ul class="space-y-2 text-xs font-medium text-on-surface/70">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xs">check_circle</span> Rapid UI Iterations</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xs">check_circle</span> Core Logic Mapping</li>
+</ul>
+</div>
+<!-- Service 2 -->
+<div class="glass-card p-8 rounded-2xl group">
+<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
+</div>
+<h3 class="text-xl font-bold mb-4 font-headline">Modern Redesigns</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Breathe new life into legacy platforms with futuristic aesthetics and improved UX.</p>
+<ul class="space-y-2 text-xs font-medium text-on-surface/70">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xs">check_circle</span> Performance Audit</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xs">check_circle</span> Visual Overhaul</li>
+</ul>
+</div>
+<!-- Service 3 -->
+<div class="glass-card p-8 rounded-2xl group">
+<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">hub</span>
+</div>
+<h3 class="text-xl font-bold mb-4 font-headline">AI Integration</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Infusing LLMs and automation into your existing workflow for massive efficiency gains.</p>
+<ul class="space-y-2 text-xs font-medium text-on-surface/70">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xs">check_circle</span> Custom RAG Pipelines</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xs">check_circle</span> API Connectivity</li>
+</ul>
+</div>
+<!-- Service 4 -->
+<div class="glass-card p-8 rounded-2xl group">
+<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">rocket_launch</span>
+</div>
+<h3 class="text-xl font-bold mb-4 font-headline">AI Lead Gen</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Smart systems that find, qualify, and engage your perfect customers automatically.</p>
+<ul class="space-y-2 text-xs font-medium text-on-surface/70">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xs">check_circle</span> Data Scraping</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xs">check_circle</span> Cold Outreach CRM</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Tech Stack Bento -->
+<section class="py-24 px-6 max-w-7xl mx-auto" id="tech">
+<div class="text-center mb-16">
+<h2 class="font-headline text-4xl font-bold mb-4">Our Tech Stack</h2>
+<p class="text-on-surface-variant">Built on industry-leading technologies for scale and performance.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+<div class="glass-card p-10 rounded-3xl flex flex-col items-center justify-center gap-4 group">
+<img alt="Laravel" class="h-16 w-16 object-contain group-hover:scale-110 transition-transform" data-alt="Laravel Framework logo in signature red" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDUmV8IVclYnrifMorWVUBABC95DnPA1VPNOq5bo1szlPWHIJ-pNknf7TXmNw6v7pNFAWSfiGZtQHUwJai4Kcb54i-j-50dYPKhrBu0qsbOZr777AiV7O47cw3NTykUIwZZooKvcNO75IN08VCPEOpqJ_5s8yX7I23YQlOMkqPqiWdqDiPx4ro6hPCWkLXVr8vakq32iB-y5-9Ai0TasjT4l7FSwoVKiyFOfmmaKttWOV84WQcIrMSfVB_9x5J_9zVJaYu4sSglCfL"/>
+<span class="font-headline font-bold text-on-surface/60 group-hover:text-primary transition-colors">Laravel</span>
+</div>
+<div class="glass-card p-10 rounded-3xl flex flex-col items-center justify-center gap-4 group">
+<img alt="ReactJS" class="h-16 w-16 object-contain group-hover:scale-110 transition-transform" data-alt="ReactJS atom logo in bright blue" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwFIF_uYFbmmTVuxVSsXDaI_iu_P6geE9eLH1gkUF7QD5WIgMpz5s3hAqFVPa2ETE2pGfQ8V7bnuazQiejh92obP75LVVtLaMlyyHqaUC5dotQq9PiaKvXYLFT7IG-UZ4zs1L-EGXPrDHiaH3Jej3UF3gbc2uHsrn4W4G2rF_UBQxbeFYUvgASh_-9QmR0AYzPUdI-39Cj4Q0qtah5I9E5zScC2qfPPmU0J7k-iFBXwVnIVSxrpw7JMl_OcqJj60ZoBM9cPCrinN8q"/>
+<span class="font-headline font-bold text-on-surface/60 group-hover:text-primary transition-colors">ReactJS</span>
+</div>
+<div class="glass-card p-10 rounded-3xl flex flex-col items-center justify-center gap-4 group">
+<img alt="NextJS" class="h-16 w-16 object-contain invert group-hover:scale-110 transition-transform" data-alt="NextJS modern typography logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAciY1VUKgMNPLqoptmu6qwUETCCNCU1aLCsUVQoTsWSO-DYtRqRBbfVInWPag39OTW1vq1yTa2YS7z-qu-IA1rcqH5qmSPEC4m2iUWPd83oeFFbFSyx5W0V5sTHgit9tmDHPO4-L_UIPQvQLyBvep0e7IngFXy9bQQbtNe88up2XrUR46Az4KP8Q1urgXVygFxT4iWXNWip72G30lA3kvnsdW56McFh4mEMqD_Sg4u7coMFRGCX-w66zysU7hW7dF6n5WN_SqVIupc"/>
+<span class="font-headline font-bold text-on-surface/60 group-hover:text-primary transition-colors">NextJS</span>
+</div>
+<div class="glass-card p-10 rounded-3xl flex flex-col items-center justify-center gap-4 group">
+<img alt="Python" class="h-16 w-16 object-contain group-hover:scale-110 transition-transform" data-alt="Python programming language logo blue and yellow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo4cN2q0XZlKyolRXtWu_TUDxC5U_jRhDedFqy0G8-9wbGVh_0AelelLCIS9pce-aeML6RygokguigBmiOF7jzvNj2rqkjP9jpHLaAFgamfYlKmsWTFw8vJKLWqL7IOm-OKo6qSpmvkb48bZ1gY0gG1sUzdCh7_lRmLedcYIrTaxVUGyIJ3bGvNgbzFitysy-b6tUEWelDl6LmedMldcGvLaAhuAhLBZrgq6mW5188RdTW3gxYrvq9QvpMkWIGdpC8VJqFkqH84ULW"/>
+<span class="font-headline font-bold text-on-surface/60 group-hover:text-primary transition-colors">Python</span>
+</div>
+</div>
+</section>
+<!-- Why Choose Us -->
+<section class="py-24 px-6 max-w-7xl mx-auto" id="why">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div class="relative">
+<div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/20 blur-3xl rounded-full"></div>
+<img alt="Futuristic Workspace" class="rounded-3xl object-cover aspect-square shadow-2xl relative z-10" data-alt="Modern workstation with neon amber ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0LaBt-43hJ-X-jFtB2-xEcjD6ug2jBI7WPJczfJ1_LWfXrBs7OeORePz3K8lT1Qnfkrz17GTv-wezCewftOUHaXvDXFzcS0PBph6sndXUZ7STP92IYdyfBxytIqK0PWUUmPW4NJIlzhTsILJZCj02xb12vv5xKrGePaIOTjoagYI_7QzS12vCG8xOpX8rMSpMWNJgacMaiJlR4pWicunU4aUYEbaRgYUGzH0p_B8s_cSUl9Q0ts8v5er0MYxB-3x3W266pldJpTny"/>
+<div class="absolute -bottom-6 -right-6 glass-card p-6 rounded-2xl z-20 max-w-[200px]">
+<p class="text-3xl font-bold text-primary font-headline">95%</p>
+<p class="text-xs text-on-surface-variant font-medium">Faster time to market compared to traditional agencies</p>
+</div>
+</div>
+<div>
+<h2 class="font-headline text-4xl md:text-5xl font-bold mb-8">Why Mvp Vibes?</h2>
+<div class="space-y-8">
+<div class="flex gap-6">
+<div class="mt-1 flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">speed</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Unmatched Velocity</h4>
+<p class="text-on-surface-variant">We don't do endless meetings. We do sprint cycles that deliver tangible results every 48 hours.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="mt-1 flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">palette</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Design-First Engineering</h4>
+<p class="text-on-surface-variant">Your MVP won't just work—it will look like a Series B product from day one.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="mt-1 flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">precision_manufacturing</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Scalable Architecture</h4>
+<p class="text-on-surface-variant">We build with the end in mind. Our code grows with you, from 100 users to 1 million.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- CTA Section -->
+<section class="py-32 px-6">
+<div class="max-w-5xl mx-auto glass-card rounded-[2rem] p-12 md:p-20 text-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full"></div>
+<h2 class="font-headline text-4xl md:text-6xl font-bold mb-8 relative z-10">Ready to bring your <br/><span class="text-primary italic">vision</span> to life?</h2>
+<p class="text-xl text-on-surface-variant mb-12 max-w-2xl mx-auto relative z-10">Book a strategy call today and let's map out your path to launch.</p>
+<button class="relative z-10 bg-primary text-on-primary px-12 py-5 rounded-2xl font-bold text-xl hover:bg-primary-fixed hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,159,74,0.3)]">
+                Secure Your Spot
+            </button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full border-t border-[#484847]/20 pt-12 pb-8 bg-[#0e0e0e] dark:bg-[#0e0e0e]">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto w-full">
+<div class="mb-8 md:mb-0">
+<div class="text-xl font-black text-white font-headline mb-2">Mvp Vibes</div>
+<p class="text-[#adaaaa] text-sm font-body">© 2024 Mvp Vibes. All rights reserved.</p>
+</div>
+<div class="flex gap-10">
+<a class="text-[#adaaaa] hover:text-white transition-colors text-sm font-medium hover:translate-y-[-2px] duration-300" href="#">Twitter</a>
+<a class="text-[#adaaaa] hover:text-white transition-colors text-sm font-medium hover:translate-y-[-2px] duration-300" href="#">LinkedIn</a>
+<a class="text-[#adaaaa] hover:text-white transition-colors text-sm font-medium hover:translate-y-[-2px] duration-300" href="#">Github</a>
+<a class="text-[#adaaaa] hover:text-white transition-colors text-sm font-medium hover:translate-y-[-2px] duration-300" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>
