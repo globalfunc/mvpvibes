@@ -1,4 +1,4 @@
-import { createInertiaApp } from '@inertiajs/react';
+import { createInertiaApp, router } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -9,6 +9,11 @@ import { initI18n } from '@/i18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
+router.on('navigate', (event) => {
+    const { locale, translations } = event.detail.page.props as unknown as { locale: string; translations: Record<string, unknown> };
+    if (locale && translations) initI18n(locale, translations);
+});
+
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     resolve: (name) =>
@@ -17,7 +22,7 @@ createInertiaApp({
             import.meta.glob('./pages/**/*.tsx'),
         ),
     setup({ el, App, props }) {
-        const { locale, translations } = props.initialPage.props as { locale: string; translations: Record<string, unknown> };
+        const { locale, translations } = props.initialPage.props as unknown as { locale: string; translations: Record<string, unknown> };
         initI18n(locale, translations);
 
         const root = createRoot(el);

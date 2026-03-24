@@ -59,10 +59,11 @@ export default function Welcome() {
                                 <span className="text-white/40">{t('hero.heading_part2')}</span>
                             </h1>
                             <div className="flex flex-col md:flex-row gap-6 items-start">
-                                <button className="bg-primary text-on-primary px-10 py-5 font-headline font-bold text-lg hover:bg-on-surface-variant transition-colors">
+                                <button onClick={() => setBookingOpen(true)}
+                                className="bg-primary text-on-primary px-10 py-5 font-headline font-bold text-lg hover:bg-on-surface-variant transition-colors">
                                     {t('hero.cta')}
                                 </button>
-                                <div className="flex items-center gap-3 py-4">
+                                <div className="flex items-center gap-3 py-6">
                                     <span className="relative flex h-3 w-3">
                                         <span className="animate-[ping_2s_linear_infinite] absolute inline-flex h-8 w-8 -top-2.5 -left-2.5 rounded-full bg-linear-to-tr from-emerald-400/80 to-transparent"></span>
                                         <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
@@ -93,35 +94,19 @@ export default function Welcome() {
                     </section>
 
                     {/* How It Works */}
-                    <section className="py-24 px-8 bg-surface-container-low" id="services">
+                    <section className="py-24 px-8 bg-surface-container-low" id="devcycle">
                         <div className="max-w-7xl mx-auto">
                             <span className="text-xs font-headline uppercase tracking-[0.4em] text-white/40 mb-12 block">
                                 {t('protocol.label')}
                             </span>
-                            <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-white/10 border border-white/10">
-                                {protocolSteps.map(({ num, title, desc }) => (
-                                    <div
-                                        key={num}
-                                        className="bg-background p-10 hover:bg-surface-container transition-colors group"
-                                    >
-                                        <div className="text-white/20 font-headline font-black text-4xl mb-6 group-hover:text-primary transition-colors">
-                                            {num}
-                                        </div>
-                                        <h3 className="font-headline font-bold text-xl text-white mb-4">{title}</h3>
-                                        <p className="text-sm text-white/50">{desc}</p>
-                                    </div>
-                                ))}
+                            <div className="mx-auto">
+                                <LifecycleDiagram steps={protocolSteps} />
                             </div>
                         </div>
                     </section>
 
-                    {/* Protocol Lifecycle Diagram */}
-                    <section className="py-24 px-8 max-w-7xl mx-auto">
-                        <LifecycleDiagram steps={protocolSteps} />
-                    </section>
-
                     {/* Services */}
-                    <section className="py-24 px-8 max-w-7xl mx-auto">
+                    <section className="py-24 px-8 max-w-7xl mx-auto" id="services">
                         <span className="text-xs font-headline uppercase tracking-[0.4em] text-white/40 mb-12 block">
                             {t('services.label')}
                         </span>
