@@ -6,14 +6,15 @@ return [
         'services'   => 'Services',
         'tech_stack' => 'Tech Stack',
         'why_us'     => 'Why Us',
-        'get_started' => 'Get Started',
+        'get_started' => 'Start My Project',
+        'how_it_works' => 'How it works?'
     ],
 
     'hero' => [
         'heading'       => 'From idea to MVP — faster than your coffee gets cold.',
         'heading_part1' => 'From idea to MVP —',
         'heading_part2' => 'faster than your coffee gets cold.',
-        'cta'           => 'START BUILDING NOW',
+        'cta'           => 'BOOK A SCOPING SESSION',
         'status'        => 'Currently accepting 2 new projects',
     ],
 
@@ -24,7 +25,7 @@ return [
     ],
 
     'protocol' => [
-        'label' => '02 // THE PROTOCOL',
+        'label' => '02 // Development lifecycle',
         'steps' => [
             ['num' => '01', 'title' => 'Discovery', 'desc' => 'Mapping your vision into a technical blueprint.'],
             ['num' => '02', 'title' => 'Scope',     'desc' => 'Defining the leanest path to market fit.'],
@@ -81,35 +82,35 @@ return [
     ],
 
     'stack' => [
-        'label' => '04 // THE STACK',
+        'label' => '04 // TECH STACK',
     ],
 
     'difference' => [
-        'label' => '05 // THE DIFFERENCE',
+        'label' => '05 // Why Choose MVP Vibes?',
         'items' => [
             [
-                'title' => 'Human-verified',
-                'desc'  => 'Every line of AI-generated code is audited by senior engineers with a decade of experience.',
+                'title' => 'AI-powered. Expert-validated.',
+                'desc'  => 'We combine cutting-edge AI development tools with senior engineering oversight—delivering speed without compromising code quality, scalability, or reliability.',
             ],
             [
-                'title' => 'Non-technical founders',
-                'desc'  => 'We speak your language, not just code. We bridge the gap between business vision and tech.',
+                'title' => 'Built for non-technical founders',
+                'desc'  => 'No jargon, no confusion. We translate complex technical decisions into clear, actionable insights so you always understand what\'s being built—and why.',
             ],
             [
-                'title' => 'End-to-end ownership',
-                'desc'  => 'From first pixel to production launch, we own the process so you can focus on growth.',
+                'title' => 'Full ownership, end-to-end',
+                'desc'  => 'From concept to deployment, everything we build is yours—codebase, infrastructure, and intellectual property. No lock-ins, no hidden dependencies.',
             ],
             [
-                'title' => 'Transparent process',
-                'desc'  => "Real-time dashboards show you exactly what's being built and how fast we're moving.",
+                'title' => 'Transparent, iterative delivery',
+                'desc'  => 'We work in short, focused cycles, giving you early visibility and continuous progress. Your feedback is integrated quickly—so the product evolves with your vision.',
             ],
             [
-                'title' => 'Affordable pricing',
-                'desc'  => 'Fixed-fee models optimized for early-stage startups. No hidden costs or scope creep.',
+                'title' => 'Fair, European-based pricing',
+                'desc'  => 'High-quality development at competitive rates. No outsourcing layers, no intermediaries — just direct collaboration with experienced developers.',
             ],
             [
-                'title' => 'Privacy',
-                'desc'  => 'Your intellectual property stays yours. We use local AI models for maximum security.',
+                'title' => 'Privacy-first approach',
+                'desc'  => 'We operate under strict confidentiality standards, including NDAs. Your ideas, data, and product remain fully protected at every stage.',
             ],
         ],
     ],
@@ -129,6 +130,8 @@ return [
 
     'booking' => [
         'header_label'    => 'MVP VIBES // SCOPING SESSION',
+        'calendar_select_line1' => 'Select a date',
+        'calendar_select_line2' => 'to view slots',
         'title'           => 'Book a Scoping Session',
         'label_name'      => 'Full Name',
         'label_email'     => 'Email Address',
