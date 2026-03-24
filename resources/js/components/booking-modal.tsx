@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import BookingCalendar, { DaySchedule, TimeSlot, BookingCalendarScheduleProps } from '@/components/booking-calendar';
 
 // ─── Hardcoded schedule (swap with backend data later) ────────────────────────
@@ -36,6 +37,7 @@ interface BookingModalProps extends Partial<BookingCalendarScheduleProps> {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHEDULE }: BookingModalProps) {
+    const { t } = useTranslation();
     const [mounted, setMounted] = useState(false);
     const [visible, setVisible] = useState(false);
     const [submitted, setSubmitted] = useState(false);
@@ -108,16 +110,16 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                 <div className="flex items-start justify-between px-8 md:px-12 py-8 border-b border-white/10">
                     <div>
                         <p className="text-[10px] font-headline uppercase tracking-[0.4em] text-white/30 mb-2">
-                            MVP VIBES // SCOPING SESSION
+                            {t('booking.header_label')}
                         </p>
                         <h2 className="font-headline font-bold text-3xl md:text-4xl text-white tracking-tight leading-none">
-                            Book a Scoping Session
+                            {t('booking.title')}
                         </h2>
                     </div>
                     <button
                         onClick={handleClose}
                         className="w-12 h-12 border border-white/20 flex items-center justify-center text-white/50
-                                   hover:border-white/60 hover:text-white transition-colors flex-shrink-0 ml-6"
+                                   hover:border-white/60 hover:text-white transition-colors shrink-0 ml-6"
                     >
                         <span className="material-symbols-outlined">close</span>
                     </button>
@@ -136,18 +138,21 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                         </div>
                         <div>
                             <h3 className="font-headline font-bold text-3xl text-white mb-3 tracking-tight">
-                                You're on the calendar.
+                                {t('booking.success_title')}
                             </h3>
                             <p className="text-white/50 font-body text-base max-w-md leading-relaxed">
-                                We'll review your submission and send a confirmation to{' '}
-                                <span className="text-emerald-400">{email}</span> within 24 hours.
+                                <Trans
+                                    i18nKey="booking.success_message"
+                                    values={{ email }}
+                                    components={[<span />, <span className="text-emerald-400" />]}
+                                />
                             </p>
                         </div>
                         <button
                             onClick={handleClose}
                             className="border border-white/20 text-white/60 font-headline text-sm tracking-widest uppercase px-10 py-4 hover:border-white/50 hover:text-white transition-colors"
                         >
-                            CLOSE
+                            {t('booking.close')}
                         </button>
                     </div>
                 ) : (
@@ -168,26 +173,26 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                                 <div>
                                     <label className="block text-[10px] font-headline uppercase tracking-[0.35em] text-white/35 mb-3">
-                                        Full Name
+                                        {t('booking.label_name')}
                                     </label>
                                     <input
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        placeholder="John Doe"
+                                        placeholder={t('booking.placeholder_name')}
                                         className="w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
                                                    placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors"
                                     />
                                 </div>
                                 <div>
                                     <label className="block text-[10px] font-headline uppercase tracking-[0.35em] text-white/35 mb-3">
-                                        Email Address
+                                        {t('booking.label_email')}
                                     </label>
                                     <input
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="john@example.com"
+                                        placeholder={t('booking.placeholder_email')}
                                         className="w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
                                                    placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors"
                                     />
@@ -196,13 +201,13 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
 
                             <div className="mb-10">
                                 <label className="block text-[10px] font-headline uppercase tracking-[0.35em] text-white/35 mb-3">
-                                    Briefly describe your idea, goals, and what problem you're trying to solve.
+                                    {t('booking.label_idea')}
                                 </label>
                                 <textarea
                                     value={idea}
                                     onChange={(e) => setIdea(e.target.value)}
                                     rows={5}
-                                    placeholder="We're building a platform that..."
+                                    placeholder={t('booking.placeholder_idea')}
                                     className="w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
                                                placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors resize-none"
                                 />
@@ -214,15 +219,15 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                                     {selectedDate && selectedSlot ? (
                                         <span className="flex items-center gap-2 text-emerald-400">
                                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
-                                            Slot selected — ready to confirm
+                                            {t('booking.slot_selected')}
                                         </span>
                                     ) : (
-                                        <span className="text-white/25">Select a date &amp; time slot above</span>
+                                        <span className="text-white/25">{t('booking.slot_prompt')}</span>
                                     )}
                                 </div>
 
                                 {/* Submit button with pulsating glow */}
-                                <div className="relative flex-shrink-0">
+                                <div className="relative shrink-0">
                                     {canSubmit && (
                                         <div className="absolute inset-0 bg-emerald-500 blur-md animate-pulse opacity-40 pointer-events-none" />
                                     )}
@@ -235,7 +240,7 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                                                 : 'bg-white/8 text-white/25 cursor-not-allowed border border-white/10'
                                             }`}
                                     >
-                                        CONFIRM BOOKING
+                                        {t('booking.confirm')}
                                     </button>
                                 </div>
                             </div>
