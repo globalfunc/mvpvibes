@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface TimeSlot {
     startHour: number; // Hour in Sofia (Europe/Sofia) timezone
@@ -21,11 +22,6 @@ interface BookingCalendarProps extends BookingCalendarScheduleProps {
     onSlotSelect: (slot: TimeSlot) => void;
 }
 
-const DAY_NAMES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-const MONTH_NAMES = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-];
 
 function getSofiaUtcOffset(dateStr: string): number {
     const refDate = new Date(`${dateStr}T12:00:00Z`);
@@ -49,10 +45,10 @@ function toDateStr(date: Date): string {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
-function formatDisplayDate(dateStr: string): string {
+function formatDisplayDate(dateStr: string, locale: string): string {
     const [year, month, day] = dateStr.split('-').map(Number);
     const date = new Date(year, month - 1, day);
-    return date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    return date.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
 }
 
 function getLocalTimezone(): string {
@@ -66,6 +62,23 @@ export default function BookingCalendar({
     onDateSelect,
     onSlotSelect,
 }: BookingCalendarProps) {
+    const { t, i18n } = useTranslation();
+
+    const dayNames = useMemo(() => {
+        const fmt = new Intl.DateTimeFormat(i18n.language, { weekday: 'short' });
+        // Jan 7, 2024 is a Sunday — iterate Sun→Sat
+        return Array.from({ length: 7 }, (_, i) =>
+            fmt.format(new Date(2024, 0, 7 + i)).toUpperCase(),
+        );
+    }, [i18n.language]);
+
+    const monthNames = useMemo(() => {
+        const fmt = new Intl.DateTimeFormat(i18n.language, { month: 'long' });
+        return Array.from({ length: 12 }, (_, i) =>
+            fmt.format(new Date(2024, i, 1)),
+        );
+    }, [i18n.language]);
+
     const today = useMemo(() => {
         const d = new Date();
         d.setHours(0, 0, 0, 0);
@@ -125,7 +138,7 @@ export default function BookingCalendar({
                         <span className="material-symbols-outlined">chevron_left</span>
                     </button>
                     <span className="font-headline font-bold text-white tracking-[0.2em] uppercase text-sm">
-                        {MONTH_NAMES[viewMonth]} {viewYear}
+                        {monthNames[viewMonth]} {viewYear}
                     </span>
                     <button
                         onClick={nextMonth}
@@ -138,7 +151,7 @@ export default function BookingCalendar({
 
                 {/* Day headers */}
                 <div className="grid grid-cols-7 mb-1">
-                    {DAY_NAMES.map((d) => (
+                    {dayNames.map((d) => (
                         <div key={d} className="text-center text-[10px] font-headline tracking-widest text-white/25 py-2">
                             {d}
                         </div>
@@ -186,7 +199,7 @@ export default function BookingCalendar({
                     <>
                         <div className="mb-6">
                             <h3 className="font-headline font-bold text-white text-xl mb-1">
-                                {formatDisplayDate(selectedDate)}
+                                {formatDisplayDate(selectedDate, i18n.language)}
                             </h3>
                             <p className="text-[10px] font-headline tracking-[0.25em] uppercase text-white/30">
                                 Times shown in {localTz}
@@ -229,7 +242,7 @@ export default function BookingCalendar({
                             <span className="material-symbols-outlined text-white/20">calendar_month</span>
                         </div>
                         <p className="text-white/25 font-headline tracking-[0.2em] uppercase text-xs text-center leading-loose">
-                            Select a date<br />to view slots
+                            {t('booking.calendar_select_line1')}<br />{t('booking.calendar_select_line2')}
                         </p>
                     </div>
                 )}
