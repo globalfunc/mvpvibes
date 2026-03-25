@@ -144,7 +144,7 @@ return [
         'confirm'         => 'CONFIRM BOOKING',
         'close'           => 'CLOSE',
         'success_title'   => "You're on the calendar.",
-        'success_message' => "We'll review your submission and send a confirmation to <1>{{email}}</1> within 24 hours.",
+        'success_message' => "A confirmation email has been sent to <1>{{email}}</1>. Please click the link in that email to confirm your booking.",
     ],
 
 ];
