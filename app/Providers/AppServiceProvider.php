@@ -18,7 +18,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->callAfterResolving('mail.manager', function ($manager) {
+            $manager->extend('brevo', function (array $config) {
+                return (new BrevoTransportFactory)->create(
+                    new Dsn('brevo+api', 'default', $config['key'] ?? '')
+                );
+            });
+        });
     }
 
     /**
@@ -27,12 +33,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
-
-        $this->app['mail.manager']->extend('brevo', function () {
-            return (new BrevoTransportFactory)->create(
-                new Dsn('brevo+api', 'default', config('mail.mailers.brevo.key'))
-            );
-        });
     }
 
     /**
