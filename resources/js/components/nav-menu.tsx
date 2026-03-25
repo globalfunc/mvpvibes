@@ -55,10 +55,7 @@ export default function NavMenu() {
             `}</style>
             <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-[#131313]/60 backdrop-blur-2xl">
                 <div className="flex justify-between items-center px-8 h-20 w-full mx-auto">
-                    <img src="/assets/MVP Vibes Logo.png" alt="MVP Vibes" title="MVP Vibes" className="h-3/4 w-auto" />
-                    <img src="/assets/MVP Vibes Logo3.png" alt="MVP Vibes" title="MVP Vibes" className="h-3/4 w-auto" />
                     <img src="/assets/MVP Vibes Logo2.png" alt="MVP Vibes" title="MVP Vibes" className="h-3/4 w-auto" />
-                    <img src="/assets/mvp-latest.png" alt="MVP Vibes" title="MVP Vibes" className="h-3/4 w-auto" />
                     <div className="hidden md:flex items-center gap-12">
                         {NAV_LINKS.map(({ href, labelKey, sectionId }) => {
                             const isActive = activeSection === sectionId;
