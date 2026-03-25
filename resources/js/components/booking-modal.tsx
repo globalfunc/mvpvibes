@@ -1,61 +1,94 @@
 import { useState, useEffect } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import BookingCalendar, { DaySchedule, TimeSlot, BookingCalendarScheduleProps } from '@/components/booking-calendar';
+import BookingCalendar from '@/components/booking-calendar';
+import TimezoneSelector from '@/components/timezone-selector';
+import type { DaySchedule, TimeSlot, SlotDateTime } from '@/types/booking';
+import { groupSlotsByDate } from '@/lib/slot-utils';
 
-// ─── Hardcoded schedule (swap with backend data later) ────────────────────────
-function generateDefaultSchedule(): DaySchedule[] {
-    const slots: TimeSlot[] = Array.from({ length: 7 }, (_, i) => ({
-        startHour: 10 + i,
-        endHour: 11 + i,
-    }));
-
-    const schedule: DaySchedule[] = [];
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    for (let i = 1; i <= 60; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-        const dow = date.getDay();
-        if (dow >= 1 && dow <= 5) {
-            schedule.push({
-                date: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
-                slots,
-            });
-        }
-    }
-    return schedule;
-}
-
-const DEFAULT_SCHEDULE = generateDefaultSchedule();
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-interface BookingModalProps extends Partial<BookingCalendarScheduleProps> {
+interface BookingModalProps {
     isOpen: boolean;
     onClose: () => void;
+    prefillData?: { name: string; email: string };
+    proposedStartUtc?: string;
+    proposedEndUtc?: string;
+    rescheduleSessionId?: number;
+    rescheduleConfirmUrl?: string;
+    rebookSessionId?: number;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
-export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHEDULE }: BookingModalProps) {
+export default function BookingModal({
+    isOpen,
+    onClose,
+    prefillData,
+    proposedStartUtc,
+    proposedEndUtc,
+    rescheduleSessionId,
+    rescheduleConfirmUrl,
+    rebookSessionId,
+}: BookingModalProps) {
     const { t } = useTranslation();
     const [mounted, setMounted] = useState(false);
     const [visible, setVisible] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+
+    const [schedule, setSchedule] = useState<DaySchedule[]>([]);
+    const [loadingSchedule, setLoadingSchedule] = useState(false);
+
+    const [userTimezone, setUserTimezone] = useState(
+        () => Intl.DateTimeFormat().resolvedOptions().timeZone,
+    );
 
     const [selectedDate, setSelectedDate] = useState<string | null>(null);
     const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    const [name, setName] = useState(prefillData?.name ?? '');
+    const [email, setEmail] = useState(prefillData?.email ?? '');
     const [idea, setIdea] = useState('');
+
+    const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+    const isReschedule = !!rescheduleSessionId && !!rescheduleConfirmUrl;
+    const isPrefilled = !!prefillData;
+
+    // Fetch schedule from API
+    const fetchSchedule = async (tz: string) => {
+        setLoadingSchedule(true);
+        try {
+            const res = await fetch('/api/booking/schedule');
+            const data = await res.json();
+            const grouped = groupSlotsByDate(data.slots as SlotDateTime[], tz);
+            setSchedule(grouped);
+
+            // Pre-select proposed slot if provided
+            if (proposedStartUtc && proposedEndUtc) {
+                for (const day of grouped) {
+                    const slot = day.slots.find((s) => s.startUtc === proposedStartUtc);
+                    if (slot) {
+                        setSelectedDate(day.date);
+                        setSelectedSlot(slot);
+                        break;
+                    }
+                }
+            }
+        } finally {
+            setLoadingSchedule(false);
+        }
+    };
 
     useEffect(() => {
         if (isOpen) {
             setMounted(true);
             requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
             document.body.style.overflow = 'hidden';
+            fetchSchedule(userTimezone);
+            // Prefill from props
+            if (prefillData) {
+                setName(prefillData.name);
+                setEmail(prefillData.email);
+            }
         } else {
             setVisible(false);
-            const t = setTimeout(() => {
+            const timer = setTimeout(() => {
                 setMounted(false);
                 setSubmitted(false);
                 setSelectedDate(null);
@@ -63,26 +96,90 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                 setName('');
                 setEmail('');
                 setIdea('');
+                setFieldErrors({});
+                setSchedule([]);
             }, 300);
             document.body.style.overflow = '';
-            return () => clearTimeout(t);
+            return () => clearTimeout(timer);
         }
         return () => { document.body.style.overflow = ''; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen]);
+
+    // Re-group when timezone changes
+    const handleTimezoneChange = async (tz: string) => {
+        setUserTimezone(tz);
+        setSelectedDate(null);
+        setSelectedSlot(null);
+        await fetchSchedule(tz);
+    };
 
     const handleClose = () => {
         setVisible(false);
         setTimeout(onClose, 300);
     };
 
-    const canSubmit = !!(selectedDate && selectedSlot && name.trim() && email.trim());
+    const canSubmit = !!(selectedDate && selectedSlot && name.trim() && email.trim()) && !submitting;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!canSubmit) return;
-        // TODO: wire to backend endpoint
-        console.log({ selectedDate, selectedSlot, name, email, idea });
-        setSubmitted(true);
+        if (!canSubmit || !selectedSlot) return;
+
+        setFieldErrors({});
+        setSubmitting(true);
+
+        try {
+            if (isReschedule && rescheduleConfirmUrl) {
+                // Confirm reschedule — POST to the signed URL passed from the server
+                const res = await fetch(rescheduleConfirmUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-XSRF-TOKEN': getCsrfToken(),
+                    },
+                    body: JSON.stringify({}),
+                });
+                if (res.ok) {
+                    setSubmitted(true);
+                } else {
+                    const data = await res.json();
+                    setFieldErrors({ start_utc: data.error ?? 'Failed to confirm reschedule.' });
+                }
+            } else {
+                // Regular booking or rebook
+                const res = await fetch('/api/booking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-XSRF-TOKEN': getCsrfToken(),
+                    },
+                    body: JSON.stringify({
+                        name: name.trim(),
+                        email: email.trim(),
+                        idea: idea.trim(),
+                        start_utc: selectedSlot.startUtc,
+                        end_utc: selectedSlot.endUtc,
+                    }),
+                });
+
+                if (res.status === 201) {
+                    setSubmitted(true);
+                } else if (res.status === 422) {
+                    const data = await res.json();
+                    const errors: Record<string, string> = {};
+                    for (const [key, msgs] of Object.entries(data.errors ?? {})) {
+                        errors[key] = (msgs as string[])[0];
+                    }
+                    setFieldErrors(errors);
+                } else {
+                    setFieldErrors({ start_utc: 'Something went wrong. Please try again.' });
+                }
+            }
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     const handleDateSelect = (date: string) => {
@@ -91,6 +188,8 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
     };
 
     if (!mounted) return null;
+
+    const successTitle = isReschedule ? 'New booking confirmed!' : t('booking.success_title');
 
     return (
         <div
@@ -138,7 +237,7 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                         </div>
                         <div>
                             <h3 className="font-headline font-bold text-3xl text-white mb-3 tracking-tight">
-                                {t('booking.success_title')}
+                                {successTitle}
                             </h3>
                             <p className="text-white/50 font-body text-base max-w-md leading-relaxed">
                                 <Trans
@@ -157,15 +256,47 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                     </div>
                 ) : (
                     <>
+                        {/* Proposed time banner */}
+                        {isReschedule && proposedStartUtc && (
+                            <div className="px-8 md:px-12 py-4 bg-emerald-500/10 border-b border-emerald-500/20">
+                                <p className="text-emerald-400 text-sm font-headline tracking-wide">
+                                    <span className="material-symbols-outlined text-base align-middle mr-2" style={{ fontVariationSettings: "'FILL' 1" }}>schedule</span>
+                                    Admin proposed a new time — review it below and confirm.
+                                </p>
+                            </div>
+                        )}
+
                         {/* Calendar section */}
                         <div className="px-8 md:px-12 py-10 border-b border-white/10">
-                            <BookingCalendar
-                                schedule={schedule}
-                                selectedDate={selectedDate}
-                                selectedSlot={selectedSlot}
-                                onDateSelect={handleDateSelect}
-                                onSlotSelect={setSelectedSlot}
-                            />
+                            {loadingSchedule ? (
+                                <div className="flex items-center justify-center h-48 gap-3 text-white/30">
+                                    <span className="material-symbols-outlined animate-spin">progress_activity</span>
+                                    <span className="font-headline text-sm tracking-widest uppercase">Loading schedule…</span>
+                                </div>
+                            ) : (
+                                <BookingCalendar
+                                    schedule={schedule}
+                                    selectedDate={selectedDate}
+                                    selectedSlot={selectedSlot}
+                                    onDateSelect={handleDateSelect}
+                                    onSlotSelect={setSelectedSlot}
+                                    userTimezone={userTimezone}
+                                />
+                            )}
+
+                            {/* Timezone selector */}
+                            <div className="mt-8 pt-6 border-t border-white/10">
+                                <TimezoneSelector
+                                    label="Your timezone"
+                                    value={userTimezone}
+                                    onChange={handleTimezoneChange}
+                                    className="max-w-sm"
+                                />
+                            </div>
+
+                            {fieldErrors.start_utc && (
+                                <p className="text-red-400 text-xs mt-3">{fieldErrors.start_utc}</p>
+                            )}
                         </div>
 
                         {/* Form section */}
@@ -179,10 +310,15 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
+                                        readOnly={isPrefilled}
                                         placeholder={t('booking.placeholder_name')}
-                                        className="w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
-                                                   placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors"
+                                        className={`w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
+                                                   placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors
+                                                   ${isPrefilled ? 'opacity-60 cursor-default' : ''}`}
                                     />
+                                    {fieldErrors.name && (
+                                        <p className="text-red-400 text-xs mt-1.5">{fieldErrors.name}</p>
+                                    )}
                                 </div>
                                 <div>
                                     <label className="block text-[10px] font-headline uppercase tracking-[0.35em] text-white/35 mb-3">
@@ -192,28 +328,38 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
+                                        readOnly={isPrefilled}
                                         placeholder={t('booking.placeholder_email')}
-                                        className="w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
-                                                   placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors"
+                                        className={`w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
+                                                   placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors
+                                                   ${isPrefilled ? 'opacity-60 cursor-default' : ''}`}
                                     />
+                                    {fieldErrors.email && (
+                                        <p className="text-red-400 text-xs mt-1.5">{fieldErrors.email}</p>
+                                    )}
                                 </div>
                             </div>
 
-                            <div className="mb-10">
-                                <label className="block text-[10px] font-headline uppercase tracking-[0.35em] text-white/35 mb-3">
-                                    {t('booking.label_idea')}
-                                </label>
-                                <textarea
-                                    value={idea}
-                                    onChange={(e) => setIdea(e.target.value)}
-                                    rows={5}
-                                    placeholder={t('booking.placeholder_idea')}
-                                    className="w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
-                                               placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors resize-none"
-                                />
-                            </div>
+                            {!isReschedule && (
+                                <div className="mb-10">
+                                    <label className="block text-[10px] font-headline uppercase tracking-[0.35em] text-white/35 mb-3">
+                                        {t('booking.label_idea')}
+                                    </label>
+                                    <textarea
+                                        value={idea}
+                                        onChange={(e) => setIdea(e.target.value)}
+                                        rows={5}
+                                        placeholder={t('booking.placeholder_idea')}
+                                        className="w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
+                                                   placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors resize-none"
+                                    />
+                                    {fieldErrors.idea && (
+                                        <p className="text-red-400 text-xs mt-1.5">{fieldErrors.idea}</p>
+                                    )}
+                                </div>
+                            )}
 
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mt-6">
                                 {/* Selection summary */}
                                 <div className="text-xs font-label tracking-wider uppercase">
                                     {selectedDate && selectedSlot ? (
@@ -226,7 +372,7 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                                     )}
                                 </div>
 
-                                {/* Submit button with pulsating glow */}
+                                {/* Submit button */}
                                 <div className="relative shrink-0">
                                     {canSubmit && (
                                         <div className="absolute inset-0 bg-emerald-500 blur-md animate-pulse opacity-40 pointer-events-none" />
@@ -240,7 +386,7 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
                                                 : 'bg-white/8 text-white/25 cursor-not-allowed border border-white/10'
                                             }`}
                                     >
-                                        {t('booking.confirm')}
+                                        {submitting ? 'Confirming…' : isReschedule ? 'Confirm New Time' : t('booking.confirm')}
                                     </button>
                                 </div>
                             </div>
@@ -250,4 +396,9 @@ export default function BookingModal({ isOpen, onClose, schedule = DEFAULT_SCHED
             </div>
         </div>
     );
+}
+
+function getCsrfToken(): string {
+    const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+    return match ? decodeURIComponent(match[1]) : '';
 }

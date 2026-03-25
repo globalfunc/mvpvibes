@@ -1,44 +1,17 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { DaySchedule, TimeSlot } from '@/types/booking';
+import { utcToLocalTime } from '@/lib/slot-utils';
 
-export interface TimeSlot {
-    startHour: number; // Hour in Sofia (Europe/Sofia) timezone
-    endHour: number;
-}
+export type { DaySchedule, TimeSlot };
 
-export interface DaySchedule {
-    date: string; // YYYY-MM-DD
-    slots: TimeSlot[];
-}
-
-export interface BookingCalendarScheduleProps {
+interface BookingCalendarProps {
     schedule: DaySchedule[];
-}
-
-interface BookingCalendarProps extends BookingCalendarScheduleProps {
     selectedDate: string | null;
     selectedSlot: TimeSlot | null;
     onDateSelect: (date: string) => void;
     onSlotSelect: (slot: TimeSlot) => void;
-}
-
-
-function getSofiaUtcOffset(dateStr: string): number {
-    const refDate = new Date(`${dateStr}T12:00:00Z`);
-    const parts = new Intl.DateTimeFormat('en-US', {
-        timeZone: 'Europe/Sofia',
-        hour: '2-digit',
-        hour12: false,
-    }).formatToParts(refDate);
-    const sofiaHour = parseInt(parts.find((p) => p.type === 'hour')!.value);
-    return sofiaHour - 12;
-}
-
-function sofiaHourToLocalTime(dateStr: string, sofiaHour: number): string {
-    const offset = getSofiaUtcOffset(dateStr);
-    const utcHour = sofiaHour - offset;
-    const slotDate = new Date(`${dateStr}T${String(utcHour).padStart(2, '0')}:00:00Z`);
-    return slotDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+    userTimezone: string;
 }
 
 function toDateStr(date: Date): string {
@@ -51,22 +24,18 @@ function formatDisplayDate(dateStr: string, locale: string): string {
     return date.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
 }
 
-function getLocalTimezone(): string {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone.replace(/_/g, ' ');
-}
-
 export default function BookingCalendar({
     schedule,
     selectedDate,
     selectedSlot,
     onDateSelect,
     onSlotSelect,
+    userTimezone,
 }: BookingCalendarProps) {
     const { t, i18n } = useTranslation();
 
     const dayNames = useMemo(() => {
         const fmt = new Intl.DateTimeFormat(i18n.language, { weekday: 'short' });
-        // Jan 7, 2024 is a Sunday — iterate Sun→Sat
         return Array.from({ length: 7 }, (_, i) =>
             fmt.format(new Date(2024, 0, 7 + i)).toUpperCase(),
         );
@@ -88,7 +57,11 @@ export default function BookingCalendar({
     const [viewYear, setViewYear] = useState(today.getFullYear());
     const [viewMonth, setViewMonth] = useState(today.getMonth());
 
-    const availableDates = useMemo(() => new Set(schedule.map((d) => d.date)), [schedule]);
+    // Dates that have at least one available slot
+    const availableDates = useMemo(
+        () => new Set(schedule.filter((d) => d.slots.some((s) => s.available !== false)).map((d) => d.date)),
+        [schedule],
+    );
 
     const calendarDays = useMemo(() => {
         const firstDay = new Date(viewYear, viewMonth, 1);
@@ -121,7 +94,7 @@ export default function BookingCalendar({
         [selectedDate, schedule],
     );
 
-    const localTz = getLocalTimezone();
+    const displayTz = userTimezone.replace(/_/g, ' ');
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -202,30 +175,34 @@ export default function BookingCalendar({
                                 {formatDisplayDate(selectedDate, i18n.language)}
                             </h3>
                             <p className="text-[10px] font-headline tracking-[0.25em] uppercase text-white/30">
-                                Times shown in {localTz}
+                                Times shown in {displayTz}
                             </p>
                         </div>
 
                         {selectedDaySchedule ? (
                             <div className="grid grid-cols-2 gap-3">
                                 {selectedDaySchedule.slots.map((slot) => {
-                                    const localStart = sofiaHourToLocalTime(selectedDate, slot.startHour);
-                                    const localEnd = sofiaHourToLocalTime(selectedDate, slot.endHour);
-                                    const isActive = selectedSlot?.startHour === slot.startHour;
+                                    const localStart = utcToLocalTime(slot.startUtc, userTimezone);
+                                    const localEnd = utcToLocalTime(slot.endUtc, userTimezone);
+                                    const isUnavailable = slot.available === false;
+                                    const isActive = selectedSlot?.startUtc === slot.startUtc;
 
                                     return (
                                         <button
-                                            key={slot.startHour}
-                                            onClick={() => onSlotSelect(slot)}
+                                            key={slot.startUtc}
+                                            onClick={() => !isUnavailable && onSlotSelect(slot)}
+                                            disabled={isUnavailable}
                                             className={[
                                                 'p-5 border text-left transition-all duration-150 font-headline group',
                                                 isActive
                                                     ? 'bg-emerald-500 border-emerald-400 text-black'
-                                                    : 'border-white/15 text-white hover:border-emerald-400 hover:bg-emerald-400/10',
+                                                    : isUnavailable
+                                                      ? 'border-white/8 text-white/20 cursor-not-allowed'
+                                                      : 'border-white/15 text-white hover:border-emerald-400 hover:bg-emerald-400/10',
                                             ].join(' ')}
                                         >
                                             <div className="font-bold text-lg leading-none">{localStart}</div>
-                                            <div className={`text-xs mt-1.5 font-label tracking-wider ${isActive ? 'text-black/50' : 'text-white/35'}`}>
+                                            <div className={`text-xs mt-1.5 font-label tracking-wider ${isActive ? 'text-black/50' : isUnavailable ? 'text-white/20' : 'text-white/35'}`}>
                                                 — {localEnd}
                                             </div>
                                         </button>

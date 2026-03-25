@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Head } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
+import { Head, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import LandingFooter from '@/components/landing-footer';
 import NavMenu from '@/components/nav-menu';
@@ -10,11 +10,37 @@ type ProtocolStep = { num: string; title: string; desc: string };
 type ServiceItem  = { title: string; description: string; features: string[] };
 type DiffItem     = { title: string; desc: string };
 
+type WelcomeProps = {
+    autoOpenBooking?: boolean;
+    prefillData?: { name: string; email: string };
+    proposedStartUtc?: string;
+    proposedEndUtc?: string;
+    rescheduleSessionId?: number;
+    rescheduleConfirmUrl?: string;
+    rebookSessionId?: number;
+};
+
 const SERVICE_ICONS = ['check_circle', 'check_circle', 'refresh', 'refresh', 'hub', 'hub', 'auto_awesome', 'auto_awesome'];
 
 export default function Welcome() {
+    const {
+        autoOpenBooking,
+        prefillData,
+        proposedStartUtc,
+        proposedEndUtc,
+        rescheduleSessionId,
+        rescheduleConfirmUrl,
+        rebookSessionId,
+    } = usePage().props as WelcomeProps;
+
     const [bookingOpen, setBookingOpen] = useState(false);
     const { t } = useTranslation();
+
+    useEffect(() => {
+        if (autoOpenBooking) {
+            setBookingOpen(true);
+        }
+    }, [autoOpenBooking]);
 
     const protocolSteps = t('protocol.steps', { returnObjects: true }) as ProtocolStep[];
     const serviceItems  = t('services.items',  { returnObjects: true }) as ServiceItem[];
@@ -220,7 +246,16 @@ export default function Welcome() {
                 <LandingFooter />
             </div>
 
-            <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} />
+            <BookingModal
+                isOpen={bookingOpen}
+                onClose={() => setBookingOpen(false)}
+                prefillData={prefillData}
+                proposedStartUtc={proposedStartUtc}
+                proposedEndUtc={proposedEndUtc}
+                rescheduleSessionId={rescheduleSessionId}
+                rescheduleConfirmUrl={rescheduleConfirmUrl}
+                rebookSessionId={rebookSessionId}
+            />
         </>
     );
 }
