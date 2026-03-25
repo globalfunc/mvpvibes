@@ -5,7 +5,6 @@ namespace App\Providers;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -29,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
 
-        Mail::extend('brevo', function () {
+        $this->app['mail.manager']->extend('brevo', function () {
             return (new BrevoTransportFactory)->create(
                 new Dsn('brevo+api', 'default', config('mail.mailers.brevo.key'))
             );
