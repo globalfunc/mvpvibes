@@ -13,7 +13,7 @@ servers:
 
 proxy:
   ssl: true
-  host: mvpvibes.eu,www.mvpvibes.eu
+  host: mvpvibes.eu
   app_port: 80
 
 registry:
@@ -43,13 +43,10 @@ env:
     SESSION_DRIVER: database
     FILESYSTEM_DISK: local
     BROADCAST_CONNECTION: log
-    MAIL_MAILER: smtp
+    MAIL_MAILER: brevo
     MAIL_FROM_ADDRESS: "contact@mvpvibes.eu"
     MAIL_FROM_NAME: MvpVibes
   secret:
     - APP_KEY
     - DB_PASSWORD
-    - MAIL_HOST
-    - MAIL_PORT
-    - MAIL_USERNAME
-    - MAIL_PASSWORD
+    - BREVO_API_KEY
