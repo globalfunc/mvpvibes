@@ -13,7 +13,7 @@ servers:
 
 proxy:
   ssl: true
-  host: mvpvibes.eu
+  host: mvpvibes.eu,www.mvpvibes.eu
   app_port: 80
 
 registry:
