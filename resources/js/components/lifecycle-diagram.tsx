@@ -72,7 +72,7 @@ export default function LifecycleDiagram({ steps, defaultActive = 0 }: { steps: 
         <div className="flex flex-col lg:flex-row items-center gap-6">
 
             {/* ── Wheel ── */}
-            <div className="w-full max-w-2xl shrink-0">
+            <div className="w-full max-w-xl shrink-0">
                 <svg viewBox="0 0 500 500" className="w-full">
                     {steps.map((step, i) => {
                         const midDeg   = i * seg + seg / 2;

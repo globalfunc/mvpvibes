@@ -44,7 +44,7 @@ env:
     FILESYSTEM_DISK: local
     BROADCAST_CONNECTION: log
     MAIL_MAILER: smtp
-    MAIL_FROM_ADDRESS: "hello@mvpvibes.eu"
+    MAIL_FROM_ADDRESS: "contact@mvpvibes.eu"
     MAIL_FROM_NAME: MvpVibes
   secret:
     - APP_KEY
