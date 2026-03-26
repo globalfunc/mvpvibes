@@ -30,7 +30,7 @@ class BookingConfirmationMail extends Mailable implements ShouldQueue
         $startLocal = $this->session->start_utc->copy()->setTimezone($adminTz);
         $endLocal   = $this->session->end_utc->copy()->setTimezone($adminTz);
 
-        $confirmUrl = URL::signedRoute('booking.confirm', ['session' => $this->session->id]);
+        $confirmUrl = config('app.url').URL::signedRoute('booking.confirm', ['session' => $this->session->id], absolute: false);
 
         return new Content(
             view: 'emails.booking-confirmation',

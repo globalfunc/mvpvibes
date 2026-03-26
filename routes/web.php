@@ -29,18 +29,18 @@ Route::prefix('api/booking')->group(function () {
 // Signed user-confirmation link (sent in booking confirmation email)
 Route::get('/booking/confirm/{session}', [BookingController::class, 'confirmUser'])
     ->name('booking.confirm')
-    ->middleware('signed');
+    ->middleware('signed:relative');
 
 // Signed reschedule / cancel confirmation links
 Route::get('/booking/reschedule/{session}', [BookingRescheduleController::class, 'show'])
     ->name('booking.reschedule.show')
-    ->middleware('signed');
+    ->middleware('signed:relative');
 Route::post('/booking/reschedule/{session}/confirm', [BookingRescheduleController::class, 'confirm'])
     ->name('booking.reschedule.confirm')
-    ->middleware('signed');
+    ->middleware('signed:relative');
 Route::get('/booking/rebook/{session}', [BookingRescheduleController::class, 'rebook'])
     ->name('booking.rebook')
-    ->middleware('signed');
+    ->middleware('signed:relative');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/admin.php';

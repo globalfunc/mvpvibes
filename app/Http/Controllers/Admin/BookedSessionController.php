@@ -59,7 +59,7 @@ class BookedSessionController extends Controller
             'reschedule_reason'  => $request->reason,
         ]);
 
-        $rebookUrl = URL::signedRoute('booking.rebook', ['session' => $session->id], now()->addDays(7));
+        $rebookUrl = config('app.url').URL::signedRoute('booking.rebook', ['session' => $session->id], now()->addDays(7), absolute: false);
 
         Mail::to($session->bookableUser->email)
             ->queue(new CancellationNotificationMail($session, $rebookUrl));
@@ -85,7 +85,7 @@ class BookedSessionController extends Controller
             'proposed_end_utc'    => $proposedEnd,
         ]);
 
-        $rescheduleUrl = URL::signedRoute('booking.reschedule.show', ['session' => $session->id], now()->addDays(7));
+        $rescheduleUrl = config('app.url').URL::signedRoute('booking.reschedule.show', ['session' => $session->id], now()->addDays(7), absolute: false);
 
         Mail::to($session->bookableUser->email)
             ->queue(new RescheduleNotificationMail($session, $rescheduleUrl));

@@ -23,7 +23,7 @@ class BookingRescheduleController extends Controller
     {
         $user = $session->bookableUser;
 
-        $confirmUrl = URL::signedRoute('booking.reschedule.confirm', ['session' => $session->id], now()->addDays(7));
+        $confirmUrl = config('app.url').URL::signedRoute('booking.reschedule.confirm', ['session' => $session->id], now()->addDays(7), absolute: false);
 
         return Inertia::render('welcome', [
             'autoOpenBooking'      => true,
