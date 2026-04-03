@@ -75,6 +75,12 @@ export function initializeTheme(): void {
         return;
     }
 
+    if ((window as unknown as Record<string, unknown>).forceDarkMode) {
+        currentAppearance = 'dark';
+        applyTheme('dark');
+        return;
+    }
+
     if (!localStorage.getItem('appearance')) {
         localStorage.setItem('appearance', 'system');
         setCookie('appearance', 'system');
