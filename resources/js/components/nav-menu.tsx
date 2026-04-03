@@ -55,7 +55,10 @@ export default function NavMenu() {
             `}</style>
             <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-[#131313]/60 backdrop-blur-2xl">
                 <div className="flex justify-between items-center px-8 h-20 w-full mx-auto">
-                    <img src="/assets/MVP Vibes Logo2.png" alt="MVP Vibes" title="MVP Vibes" className="h-3/4 w-auto" />
+                    <a href="/" className="flex items-center justify-between h-full">
+                        <img src="/assets/Untitled design (7).png" alt="MVP Vibes" title="MVP Vibes" className="h-3/4 w-auto" />
+                        <div>MVP Vibes</div>
+                    </a>
                     <div className="hidden md:flex items-center gap-12">
                         {NAV_LINKS.map(({ href, labelKey, sectionId }) => {
                             const isActive = activeSection === sectionId;
@@ -77,7 +80,7 @@ export default function NavMenu() {
                     <div className="flex items-center gap-4">
                         <LanguageSwitch locale={locale} />
                         <button onClick={() => setBookingOpen(true)}
-                            className="bg-primary text-on-primary px-6 py-2 font-headline uppercase tracking-widest text-xs font-bold hover:scale-95 transition-all duration-200">
+                            className="bg-emerald-500 text-on-primary px-6 py-2 font-headline uppercase tracking-widest text-xs font-bold hover:scale-95 transition-all duration-200">
                             {t('nav.get_started')}
                         </button>
                     </div>
