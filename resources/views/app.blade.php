@@ -6,7 +6,15 @@
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
+            window.forceDarkMode = {{ ($forceDarkMode ?? false) ? 'true' : 'false' }};
+
             (function() {
+                if (window.forceDarkMode) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                    return;
+                }
+
                 const appearance = '{{ $appearance ?? "system" }}';
 
                 if (appearance === 'system') {

@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'force_dark_mode' => (bool) env('FORCE_DARK_MODE', false),
+
 ];
