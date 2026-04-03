@@ -46,6 +46,7 @@ env:
     MAIL_MAILER: brevo
     MAIL_FROM_ADDRESS: "contact@mvpvibes.eu"
     MAIL_FROM_NAME: MvpVibes
+    FORCE_DARK_MODE: "true"
   secret:
     - APP_KEY
     - DB_PASSWORD
