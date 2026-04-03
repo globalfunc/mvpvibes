@@ -141,7 +141,7 @@ export default function Welcome() {
                                 const images = [
                                     '/assets/service-images/mvp-development.jpg',
                                     '/assets/service-images/platform-redesign.jpg',
-                                    '/assets/service-images/lead-generation3.png',
+                                    '/assets/service-images/lead-generation4.png',
                                     '/assets/service-images/ai-integration.jpg',
                                 ];
                                 const icons = [
