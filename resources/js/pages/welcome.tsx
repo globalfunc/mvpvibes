@@ -139,10 +139,10 @@ export default function Welcome() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {serviceItems.map((item, cardIndex) => {
                                 const images = [
-                                    'https://lh3.googleusercontent.com/aida-public/AB6AXuAHEEF6KQFAIYaQoUl6wgc-OtLcMxODv-__u6mfOu0pWh3Nh8-PYWiAkWQ3E2-yUcuNwLnsLbg5x9O95QoH6BLMf1rZtS3Jl00-RrxYVH4OgRDAXiDiFXaW5oRVmaymEzC54Ua_xXjY4PGDAWakVILaeHxPN1nG91inyh6sdUT992JLuEpD9IFC-fj5n_JllAOOYEnPlQvDv9HI0tP8okJ8k44AxSsayDvYRbkyBvggtJO1mLQel1phUVTHk9v6VuRfzHnqA1F4Qj5d',
-                                    'https://lh3.googleusercontent.com/aida-public/AB6AXuB5Lt09Jd531RomPs2SBPBsAQLHgc0PTJaJFBVjcUevPj9kOgHeAaI09cm4ID5pS2uDWKaKdA4IdSuNgMY5jtkc3WSfHcFMHN1YgetDB-25awN3Rfye9nQuQtXzn83IYdPXQ3BiYOiCFcS6mvbg2BU6W74j60GCS9URMeNqbVzto_9K71mldV7mdgUIdxqEV5KF6_slhPgtHLChkM6tJmgBs9bVKuv4qap-WDErzZLP0QlO6VaLe12Qa53TZQu-1L8zYn638bd3vTFK',
-                                    'https://lh3.googleusercontent.com/aida-public/AB6AXuA62E8KTTom7x_DEErR8NTiVGezsF-klhvNaNpDkvT2S1wQlhW8Z9vinuMIjX4KXw0b8eyI_P0ukrxjkEXkYxVd7uHl4Y5yJ049XlRXN7quLe-k_VK1JgJdWt6WI0YCai1elUBix-44_0zH3jbEZlbeN01VKRRdYMi7ifZVgfVIRrk4eRc0zMtONodd9R04BzKSZor07dK_RdmiiEdPNePifILoYS4jq8eUAnHf8sMK-h-2plgUS7Frcbq-TFpBo3Jiqb0io',
-                                    'https://lh3.googleusercontent.com/aida-public/AB6AXuAGNwDuNF_AziOaDV-vCjfBgV5b0Yoo7sZoctnOMiPfurkArB0Ci2_RHXfGD19zV0pFv5LDrcdHJFSShxqF5djdtdmHaESIT5s_m0RwXbBcb-h9di_70POvk9aEZ2JUNMRKuApPctx3ub6ogeOG--bAJpi3-MPNsFmmtksolS08bD3vhf4xmHnxXioukZgzbOfhyDk_f-icfrGamaxgNcQSjf9ctM0psN-l7pa604jwpK6wVxlTv6l0vWW_zvqysIVwR5ci2vzoiaZD',
+                                    '/assets/service-images/mvp-development.jpg',
+                                    '/assets/service-images/platform-redesign.jpg',
+                                    '/assets/service-images/lead-generation3.png',
+                                    '/assets/service-images/ai-integration.jpg',
                                 ];
                                 const icons = [
                                     ['check_circle', 'check_circle', 'check_circle', 'check_circle'],
@@ -150,10 +150,11 @@ export default function Welcome() {
                                     ['hub', 'hub', 'hub', 'hub', 'hub'],
                                     ['auto_awesome', 'auto_awesome', 'auto_awesome', 'auto_awesome'],
                                 ];
+
                                 return (
                                     <div key={cardIndex} className="glass-card p-1 flex flex-col group">
                                         <img
-                                            className="w-full h-64 object-cover grayscale hover:grayscale-0 opacity-50 group-hover:opacity-80 transition-opacity"
+                                            className="w-full h-96 object-cover grayscale hover:grayscale-0 opacity-50 group-hover:opacity-80 transition-opacity"
                                             alt={item.title}
                                             src={images[cardIndex]}
                                         />
