@@ -21,6 +21,7 @@ export default function NavMenu() {
 
         NAV_LINKS.forEach(({ sectionId }) => {
             const el = document.getElementById(sectionId);
+
             if (!el) return;
 
             const observer = new IntersectionObserver(
@@ -54,10 +55,10 @@ export default function NavMenu() {
                 }
             `}</style>
             <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-[#131313]/60 backdrop-blur-2xl">
-                <div className="flex justify-between items-center px-8 h-20 w-full mx-auto">
+                <div className="flex justify-between items-center px-4 sm:px-8 h-20 w-full mx-auto">
                     <a href="/" className="flex items-center justify-between h-full">
                         <img src="/assets/Untitled design (7).png" alt="MVP Vibes" title="MVP Vibes" className="h-3/4 w-auto" />
-                        <div>MVP Vibes</div>
+                        <div className="hidden md:visible">MVP Vibes</div>
                     </a>
                     <div className="hidden md:flex items-center gap-12">
                         {NAV_LINKS.map(({ href, labelKey, sectionId }) => {
