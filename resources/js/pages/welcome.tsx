@@ -74,8 +74,10 @@ export default function Welcome() {
                                 loop
                                 muted
                                 playsInline
-                                src="/assets/hero_small.webm"
-                            />
+                            >
+                                <source src="/assets/hero_small.mp4" type="video/mp4" />
+                                <source src="/assets/hero_small.webm" type="video/webm" />
+                            </video>
                         </div>
                         <div className="relative z-20 max-w-5xl w-full">
                             <h1 className="font-headline font-bold text-4xl sm:text-6xl md:text-8xl leading-tight tracking-tighter text-white mb-6 sm:mb-8">
