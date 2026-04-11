@@ -125,7 +125,7 @@ export default function BookingCalendar({
                 {/* Day headers */}
                 <div className="grid grid-cols-7 mb-1">
                     {dayNames.map((d) => (
-                        <div key={d} className="text-center text-[10px] font-headline tracking-widest text-white/25 py-2">
+                        <div key={d} className="text-center text-[10px] font-headline tracking-widest text-white/35 py-2">
                             {d}
                         </div>
                     ))}
@@ -154,8 +154,8 @@ export default function BookingCalendar({
                                     isSelected
                                         ? 'bg-emerald-500 border-emerald-400 text-black'
                                         : isDisabled
-                                          ? 'border-transparent text-white/15 cursor-not-allowed'
-                                          : 'border-white/15 text-white hover:border-emerald-400 hover:text-emerald-400 hover:bg-emerald-400/10 cursor-pointer',
+                                          ? 'border-transparent text-white/35 cursor-not-allowed'
+                                          : 'border-white/35 text-white hover:border-emerald-400 hover:text-emerald-400 hover:bg-emerald-400/10 cursor-pointer',
                                     isToday && !isSelected ? 'border-white/40' : '',
                                 ].join(' ')}
                             >
@@ -197,8 +197,8 @@ export default function BookingCalendar({
                                                 isActive
                                                     ? 'bg-emerald-500 border-emerald-400 text-black'
                                                     : isUnavailable
-                                                      ? 'border-white/8 text-white/20 cursor-not-allowed'
-                                                      : 'border-white/15 text-white hover:border-emerald-400 hover:bg-emerald-400/10',
+                                                      ? 'border-white/8 text-white/25 cursor-not-allowed'
+                                                      : 'border-white/35 text-white hover:border-emerald-400 hover:bg-emerald-400/10',
                                             ].join(' ')}
                                         >
                                             <div className="font-bold text-lg leading-none">{localStart}</div>
@@ -218,7 +218,7 @@ export default function BookingCalendar({
                         <div className="w-12 h-12 border border-white/10 flex items-center justify-center">
                             <span className="material-symbols-outlined text-white/20">calendar_month</span>
                         </div>
-                        <p className="text-white/25 font-headline tracking-[0.2em] uppercase text-xs text-center leading-loose">
+                        <p className="text-white/35 font-headline tracking-[0.2em] uppercase text-xs text-center leading-loose">
                             {t('booking.calendar_select_line1')}<br />{t('booking.calendar_select_line2')}
                         </p>
                     </div>

@@ -81,6 +81,7 @@ export default function BookingModal({
             requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
             document.body.style.overflow = 'hidden';
             fetchSchedule(userTimezone);
+
             // Prefill from props
             if (prefillData) {
                 setName(prefillData.name);
@@ -100,6 +101,7 @@ export default function BookingModal({
                 setSchedule([]);
             }, 300);
             document.body.style.overflow = '';
+
             return () => clearTimeout(timer);
         }
         return () => { document.body.style.overflow = ''; };
@@ -123,6 +125,7 @@ export default function BookingModal({
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         if (!canSubmit || !selectedSlot) return;
 
         setFieldErrors({});
@@ -140,6 +143,7 @@ export default function BookingModal({
                     },
                     body: JSON.stringify({}),
                 });
+
                 if (res.ok) {
                     setSubmitted(true);
                 } else {
@@ -169,9 +173,11 @@ export default function BookingModal({
                 } else if (res.status === 422) {
                     const data = await res.json();
                     const errors: Record<string, string> = {};
+
                     for (const [key, msgs] of Object.entries(data.errors ?? {})) {
                         errors[key] = (msgs as string[])[0];
                     }
+
                     setFieldErrors(errors);
                 } else {
                     setFieldErrors({ start_utc: 'Something went wrong. Please try again.' });
@@ -208,7 +214,7 @@ export default function BookingModal({
                 {/* Header */}
                 <div className="flex items-start justify-between px-8 md:px-12 py-8 border-b border-white/10">
                     <div>
-                        <p className="text-[10px] font-headline uppercase tracking-[0.4em] text-white/30 mb-2">
+                        <p className="text-[10px] font-headline uppercase tracking-[0.4em] text-white/35 mb-2">
                             {t('booking.header_label')}
                         </p>
                         <h2 className="font-headline font-bold text-3xl md:text-4xl text-white tracking-tight leading-none">
@@ -269,7 +275,7 @@ export default function BookingModal({
                         {/* Calendar section */}
                         <div className="px-8 md:px-12 py-10 border-b border-white/10">
                             {loadingSchedule ? (
-                                <div className="flex items-center justify-center h-48 gap-3 text-white/30">
+                                <div className="flex items-center justify-center h-48 gap-3 text-white/35">
                                     <span className="material-symbols-outlined animate-spin">progress_activity</span>
                                     <span className="font-headline text-sm tracking-widest uppercase">Loading schedule…</span>
                                 </div>
@@ -313,7 +319,7 @@ export default function BookingModal({
                                         readOnly={isPrefilled}
                                         placeholder={t('booking.placeholder_name')}
                                         className={`w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
-                                                   placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors
+                                                   placeholder:text-white/35 focus:outline-none focus:border-emerald-400/60 transition-colors
                                                    ${isPrefilled ? 'opacity-60 cursor-default' : ''}`}
                                     />
                                     {fieldErrors.name && (
@@ -331,7 +337,7 @@ export default function BookingModal({
                                         readOnly={isPrefilled}
                                         placeholder={t('booking.placeholder_email')}
                                         className={`w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
-                                                   placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors
+                                                   placeholder:text-white/35 focus:outline-none focus:border-emerald-400/60 transition-colors
                                                    ${isPrefilled ? 'opacity-60 cursor-default' : ''}`}
                                     />
                                     {fieldErrors.email && (
@@ -351,7 +357,7 @@ export default function BookingModal({
                                         rows={5}
                                         placeholder={t('booking.placeholder_idea')}
                                         className="w-full bg-transparent border border-white/15 px-5 py-4 text-white font-body text-base
-                                                   placeholder:text-white/20 focus:outline-none focus:border-emerald-400/60 transition-colors resize-none"
+                                                   placeholder:text-white/35 focus:outline-none focus:border-emerald-400/60 transition-colors resize-none"
                                     />
                                     {fieldErrors.idea && (
                                         <p className="text-red-400 text-xs mt-1.5">{fieldErrors.idea}</p>
@@ -368,7 +374,7 @@ export default function BookingModal({
                                             {t('booking.slot_selected')}
                                         </span>
                                     ) : (
-                                        <span className="text-white/25">{t('booking.slot_prompt')}</span>
+                                        <span className="text-white/35">{t('booking.slot_prompt')}</span>
                                     )}
                                 </div>
 
@@ -383,7 +389,7 @@ export default function BookingModal({
                                         className={`relative px-12 py-5 font-headline font-bold text-sm tracking-[0.2em] uppercase transition-all duration-300
                                             ${canSubmit
                                                 ? 'bg-emerald-500 text-black hover:bg-emerald-400 cursor-pointer'
-                                                : 'bg-white/8 text-white/25 cursor-not-allowed border border-white/10'
+                                                : 'bg-white/8 text-white/35 cursor-not-allowed border border-white/10'
                                             }`}
                                     >
                                         {submitting ? 'Confirming…' : isReschedule ? 'Confirm New Time' : t('booking.confirm')}
