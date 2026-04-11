@@ -6,10 +6,12 @@ import LandingFooter from '@/components/landing-footer';
 import LifecycleDiagram from '@/components/lifecycle-diagram';
 import NavMenu from '@/components/nav-menu';
 import ServiceItem from '@/components/service-item';
+import TechStackItem from '@/components/tech-stack-item';
 
-type ProtocolStep = { num: string; title: string; desc: string };
-type ServiceItem  = { title: string; description: string; features: string[] };
-type DiffItem     = { title: string; desc: string };
+type ProtocolStep  = { num: string; title: string; desc: string };
+type ServiceItem   = { title: string; description: string; features: string[] };
+type DiffItem      = { title: string; desc: string };
+type StackItem     = { name: string; description: string };
 
 type WelcomeProps = {
     autoOpenBooking?: boolean;
@@ -41,9 +43,10 @@ export default function Welcome() {
         }
     }, [autoOpenBooking]);
 
-    const protocolSteps = t('protocol.steps', { returnObjects: true }) as ProtocolStep[];
-    const serviceItems  = t('services.items',  { returnObjects: true }) as ServiceItem[];
+    const protocolSteps = t('protocol.steps',   { returnObjects: true }) as ProtocolStep[];
+    const serviceItems  = t('services.items',   { returnObjects: true }) as ServiceItem[];
     const diffItems     = t('difference.items', { returnObjects: true }) as DiffItem[];
+    const stackItems    = t('stack.items',      { returnObjects: true }) as StackItem[];
 
     return (
         <>
@@ -173,28 +176,27 @@ export default function Welcome() {
                                 {t('stack.label')}
                             </span>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 border border-white/5">
-                                {[
-                                    { name: 'Laravel',     src: '/assets/tech-stack-png-big/Brand=laravel, Style=Dark.png' },
-                                    { name: 'ReactJS',     src: '/assets/tech-stack-png-big/Brand=reactjs, Style=Dark.png' },
-                                    { name: 'NextJS',      src: '/assets/tech-stack-png-big/Brand=nextjs, Style=Dark.png' },
-                                    { name: 'Python',      src: '/assets/tech-stack-png-big/Brand=python, Style=Dark.png' },
-                                    { name: 'Flutter',     src: '/assets/tech-stack-png-big/Brand=flutter, Style=Dark.png' },
-                                    { name: 'Docker',      src: '/assets/tech-stack-png-big/Brand=docker, Style=Dark.png' },
-                                    { name: 'TypeScript',  src: '/assets/tech-stack-png-big/Brand=typescript, Style=Dark.png' },
-                                    { name: 'Ubuntu',      src: '/assets/tech-stack-png-big/Brand=ubuntu, Style=Dark.png' },
-                                ].map(({ name, src }) => (
-                                    <div
-                                        key={name}
-                                        className="bg-background aspect-square p-3 sm:p-6 md:p-8 flex flex-col items-center justify-center hover:bg-surface-container transition-all group border border-white/5"
-                                    >
-                                        <div className="w-10 h-10 sm:w-20 sm:h-20 md:w-32 md:h-32 mb-2 sm:mb-4 md:mb-6 transition-transform group-hover:scale-110">
-                                            <img className="w-full h-full object-contain" alt={name} src={src} />
-                                        </div>
-                                        <h4 className="font-headline font-bold text-white uppercase tracking-widest text-[10px] sm:text-xs md:text-sm">
-                                            {name}
-                                        </h4>
-                                    </div>
-                                ))}
+                                {stackItems.map((item, i) => {
+                                    const srcs = [
+                                        '/assets/tech-stack-png-big/Brand=laravel, Style=Dark.png',
+                                        '/assets/tech-stack-png-big/Brand=reactjs, Style=Dark.png',
+                                        '/assets/tech-stack-png-big/Brand=nextjs, Style=Dark.png',
+                                        '/assets/tech-stack-png-big/Brand=python, Style=Dark.png',
+                                        '/assets/tech-stack-png-big/Brand=reactjs, Style=Dark.png',
+                                        '/assets/tech-stack-png-big/Brand=docker, Style=Dark.png',
+                                        '/assets/tech-stack-png-big/Brand=typescript, Style=Dark.png',
+                                        '/assets/tech-stack-png-big/Brand=ubuntu, Style=Dark.png',
+                                    ];
+
+                                    return (
+                                        <TechStackItem
+                                            key={item.name}
+                                            name={item.name}
+                                            src={srcs[i]}
+                                            description={item.description}
+                                        />
+                                    );
+                                })}
                             </div>
                         </div>
                     </section>

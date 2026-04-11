@@ -83,6 +83,16 @@ return [
 
     'stack' => [
         'label' => '04 // TECH STACK',
+        'items' => [
+            ['name' => 'Laravel',      'description' => 'The go-to framework for building robust and scalable PHP web applications. With its rich ecosystem and built-in tools, Laravel enables rapid development of secure, high-performance platforms and APIs.'],
+            ['name' => 'ReactJS',      'description' => 'A powerful JavaScript library for building fast, interactive user interfaces. React enables dynamic, responsive web apps that feel smooth and modern, improving user experience and engagement.'],
+            ['name' => 'NextJS',       'description' => 'A production-ready React framework for building high-performance web applications. It offers server-side rendering and SEO optimization, making it ideal for fast, scalable, and search-friendly platforms.'],
+            ['name' => 'Python',       'description' => 'A versatile language widely used for AI and automation. With tools like FastAPI and seamless integration with LLMs, Python enables intelligent features such as chatbots, data processing, and smart workflows.'],
+            ['name' => 'React Native', 'description' => 'A cross-platform framework for building native mobile apps using JavaScript. Write once, deploy to both iOS and Android with true native performance and feel.'],
+            ['name' => 'Docker',       'description' => 'A containerization platform that ensures applications run consistently across environments. Docker simplifies deployment, improves scalability, and reduces issues between development and production.'],
+            ['name' => 'TypeScript',   'description' => 'A strongly-typed extension of JavaScript that improves code quality and reliability. It helps prevent errors early and ensures maintainable, scalable applications as projects grow.'],
+            ['name' => 'Ubuntu',       'description' => 'A stable and secure operating system widely used for servers and cloud infrastructure. It provides a reliable foundation for deploying, managing, and scaling applications in production environments.'],
+        ],
     ],
 
     'difference' => [
