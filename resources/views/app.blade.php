@@ -42,7 +42,7 @@
 
         <meta property="og:title" content="MVP Vibes">
         <meta property="og:description" content="We build MVPs that get results.">
-        <meta property="og:image" content="{{ url('/android-chrome-512x512.png') }}">
+        <meta property="og:image" content="{{ url('/mvp-social-logo-og.png') }}">
         <meta property="og:url" content="{{ url('/') }}">
         <meta property="og:type" content="website">
 
