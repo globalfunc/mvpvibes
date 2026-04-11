@@ -16,10 +16,10 @@ export default function LandingFooter() {
                     <a className="font-body text-xs tracking-tight text-white/40 hover:text-white transition-colors" href="#">
                         {t('footer.twitter')}
                     </a>
-                    <a className="font-body text-xs tracking-tight text-white/40 hover:text-white transition-colors" href="#">
+                    <a className="font-body text-xs tracking-tight text-white/40 hover:text-white transition-colors" target="_blank" href="https://www.linkedin.com/in/stoyan-penev-15742aa3/">
                         {t('footer.linkedin')}
                     </a>
-                    <a className="font-body text-xs tracking-tight text-white/40 hover:text-white transition-colors" href="#">
+                    <a className="font-body text-xs tracking-tight text-white/40 hover:text-white transition-colors" target="_blank" href="https://github.com/globalfunc">
                         {t('footer.github')}
                     </a>
                     <a className="font-body text-xs tracking-tight text-white/40 hover:text-white transition-colors" href="#">
