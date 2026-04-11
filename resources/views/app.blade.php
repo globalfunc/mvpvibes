@@ -40,6 +40,12 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+        <meta property="og:title" content="MVP Vibes">
+        <meta property="og:description" content="We build MVPs that get results.">
+        <meta property="og:image" content="{{ url('/android-chrome-512x512.png') }}">
+        <meta property="og:url" content="{{ url('/') }}">
+        <meta property="og:type" content="website">
+
         <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
